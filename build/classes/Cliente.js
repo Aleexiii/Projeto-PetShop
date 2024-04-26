@@ -15,4 +15,7 @@ export class Cliente {
     adicionarPet(pet) {
         this._pets.push(pet);
     }
+    cpf() {
+        return this._cpf;
+    }
 }

@@ -59,7 +59,9 @@ export class PetShopStore {
 
   public retornaCliente(cpf: string){
     for(let i = 0; i < this._clientes.length; ++i){
-      if(this._clientes[i] === cpf)
+      if(this._clientes[i].cpf() === cpf) {
+        return this._clientes[i];
+      }
     }
   }
 }

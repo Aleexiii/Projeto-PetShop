@@ -39,6 +39,7 @@ export async function promptInput({
   message: string;
   defaultValue?: string;
   validateFunction?: (valor: string) => boolean | string;
+  validateFunctionNull?: (input: null) => string | undefined;
 }): Promise<string> {
   const { resposta } = await inquirer.prompt({
     type: 'input',
@@ -46,6 +47,7 @@ export async function promptInput({
     message,
     default: defaultValue,
     validate: validateFunction,
+    filter: (input: string) => (input === '' ? null : input),
   });
 
   return resposta;

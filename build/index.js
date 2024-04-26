@@ -5,13 +5,14 @@ import { PetShopStore } from './classes/PetShopStore.js';
 const petShop = new PetShopStore();
 let opcao = 0;
 // 2 é o índice atual da opção de sair do programa
-while (opcao !== 6) {
+while (opcao !== 7) {
     console.clear();
     opcao = await promptSelect({
         message: 'Selecione uma opção:',
         choices: [
             'Cadastrar cliente',
             'Listar clientes',
+            'Excluir Cliente',
             '---',
             'Cadastrar pet',
             '---',
@@ -26,6 +27,9 @@ while (opcao !== 6) {
         case 1: // listar clientes
             await menuListarClientes(petShop);
             break;
+        // case 2: //excluir cliente
+        //   await menuExcluirCliente(petShop);
+        //   break; 
         case 3: // cadastrar pets
             await menuCadastrarPet(petShop);
             break;

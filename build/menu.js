@@ -4,20 +4,35 @@ import { gravarArquivo } from './lib/file.js';
 import chalk from 'chalk';
 export async function menuCadastrarCliente(petShop) {
     console.log(chalk.bgBlue('== CADASTRAR CLIENTE =='));
-    // obtém o nome do cliente
+    // Obtém o nome do cliente (obrigatório)
     const nome = await promptInput({
         message: 'Informe o nome do cliente: ',
+        validateFunctionNull: (input) => {
+            if (input === null) {
+                return 'O nome do cliente é obrigatório.';
+            }
+        },
     });
-    // obtém o cpf do cliente
+    // Obtém o CPF do cliente (obrigatório)
     const cpf = await promptInput({
         message: 'Informe o CPF do cliente: ',
+        validateFunction: (input) => {
+            if (!input.match(/^\d+$/)) {
+                return 'O CPF deve conter apenas números.';
+            }
+            return true;
+        },
+        validateFunctionNull: (input) => {
+            if (input === null) {
+                return 'O CPF é obrigatório.';
+            }
+        },
     });
-    // obtém o número de telefone do cliente
+    // Obtém o número de telefone do cliente
     const telefone = await promptInput({
         message: 'Informe o telefone do cliente: ',
     });
     petShop.adicionarCliente(nome, cpf, telefone);
-    // imprime mensagem de sucesso
     console.log(chalk.green(`>> Cliente cadastrado com sucesso. << `));
     await aguardaUsuario();
 }
@@ -43,6 +58,10 @@ export async function menuCadastrarPet(petShop) {
     });
     const raca = await promptInput({
         message: 'Informe a raça do pet: ',
+    });
+    // obtém o cliente dono do pet
+    const clienteID = await promptInput({
+        message: 'Informe o CPF do cliente: ',
     });
     const tipo = await promptSelect({
         message: 'Selecione o tipo do pet:',

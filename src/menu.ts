@@ -7,28 +7,44 @@ import chalk from 'chalk';
 export async function menuCadastrarCliente(petShop: PetShopStore) {
   console.log(chalk.bgBlue('== CADASTRAR CLIENTE =='));
 
-  // obtém o nome do cliente
-  const nome = await promptInput({
+  // Obtém o nome do cliente (obrigatório)
+  const nome: string | null = await promptInput({
     message: 'Informe o nome do cliente: ',
+    validateFunctionNull: (input: null) => {
+      if (input === null) {
+        return 'O nome do cliente é obrigatório.';
+      }
+    },
   });
 
-  // obtém o cpf do cliente
-  const cpf = await promptInput({
+  // Obtém o CPF do cliente (obrigatório)
+  const cpf: string | null = await promptInput({
     message: 'Informe o CPF do cliente: ',
+    validateFunction: (input: string) => {
+      if (!input.match(/^\d+$/)) {
+        return 'O CPF deve conter apenas números.';
+      }
+      return true;
+    },
+    validateFunctionNull: (input: null) => {
+      if (input === null) {
+        return 'O CPF é obrigatório.';
+      }
+    },
   });
 
-  // obtém o número de telefone do cliente
-  const telefone = await promptInput({
+  // Obtém o número de telefone do cliente
+  const telefone: string | null = await promptInput({
     message: 'Informe o telefone do cliente: ',
   });
 
   petShop.adicionarCliente(nome, cpf, telefone);
 
-  // imprime mensagem de sucesso
   console.log(chalk.green(`>> Cliente cadastrado com sucesso. << `));
 
   await aguardaUsuario();
 }
+
 
 export async function menuListarClientes(petShop: PetShopStore) {
   console.log(chalk.bgBlue('== LISTAR CLIENTES =='));

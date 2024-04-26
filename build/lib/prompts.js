@@ -22,13 +22,14 @@ export async function promptSelect({ message, choices, }) {
 /**
  * Gera um prompt simples e aguarda a resposta do usuário
  */
-export async function promptInput({ message, defaultValue, validateFunction, }) {
+export async function promptInput({ message, defaultValue, validateFunction, validateFunctionNull, }) {
     const { resposta } = await inquirer.prompt({
         type: 'input',
         name: 'resposta',
         message,
         default: defaultValue,
         validate: validateFunction,
+        filter: (input) => (input === '' ? null : input),
     });
     return resposta;
 }
