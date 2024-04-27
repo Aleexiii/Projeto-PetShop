@@ -1,5 +1,6 @@
 import { Cliente } from './Cliente.js';
 import { lerArquivo } from '../lib/file.js';
+import chalk from 'chalk';
 
 export class PetShopStore {
   private _clientes: Array<Cliente> = [];
@@ -29,15 +30,29 @@ export class PetShopStore {
   }
 
   public async adicionarCliente(nome: string, cpf: string, telefone: string) {
-    // descobre qual é o próximo ID do cliente
-    const id = this.proximoID();
+    
+    //Verifica se já existe um cliente com o CPF fornecido
+    const clienteExistente = this.retornaCliente(cpf);
+    
+    if (clienteExistente) {
+        console.log(chalk.yellow('Cliente com CPF já cadastrado. Atualizando dados...'));
 
-    // cria um novo objeto cliente
-    const cliente = new Cliente(id, nome, cpf, telefone);
+        clienteExistente.atualizarDados(nome, telefone);
 
-    // adiciona o cliente à lista de clientes
-    this._clientes.push(cliente);
-  }
+
+        console.log(chalk.green('>> Dados do cliente atualizados com sucesso. <<'));
+    } else {
+        // Se não houver cliente com o CPF fornecido, cria um novo cliente
+        const id = this.proximoID();
+        const cliente = new Cliente(id, nome, cpf, telefone);
+
+        // Adiciona o novo cliente à lista de clientes
+        this._clientes.push(cliente);
+        
+
+        console.log(chalk.green('>> Novo cliente cadastrado com sucesso. <<'));
+    }
+        }
 
   public async listarClientes() {
     console.log(`Listando ${this._clientes.length} cliente(s) cadastrado(s)\n`);

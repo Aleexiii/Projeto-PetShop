@@ -7,7 +7,7 @@ export class Cliente {
   private _telefone: string | null;
   private _pets: Array<Pet> = [];
 
-  constructor(id: number, nome: string, cpf: string, telefone: string | null) {
+  constructor(id: number, nome: string, cpf: string, telefone: string ) {
     this._id = id;
     this._nome = nome;
     this._cpf = cpf;
@@ -28,5 +28,18 @@ export class Cliente {
 
   public cpf() {
     return this._cpf;
+  }
+
+  public nome() {
+    return this._nome;
+  }
+
+  public telefone() {
+    return this._telefone;
+  }
+
+  public atualizarDados(nome: string, telefone: string ) {
+    this._nome = nome;
+    this._telefone = telefone;
   }
 }
