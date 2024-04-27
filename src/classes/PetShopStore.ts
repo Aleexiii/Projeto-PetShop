@@ -64,4 +64,12 @@ export class PetShopStore {
       }
     }
   }
+
+  public removerCliente(cpf: string){
+    for(let i = 0; i < this._clientes.length; ++i){
+      if(this._clientes[i].cpf() === cpf) {
+        this._clientes.splice(i, 1);
+      }
+    }
+  }
 }

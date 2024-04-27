@@ -76,3 +76,32 @@ async function aguardaUsuario() {
         message: `Pressione ${chalk.red('ENTER')} para continuar...`,
     });
 }
+export async function menuExcluirCliente(petShop) {
+    console.log(chalk.bgBlue('== EXCLUIR CLIENTE =='));
+    const cpf = await promptInput({
+        message: 'Informe o CPF do cliente a ser excluído: ',
+    });
+    const cliente = petShop.retornaCliente(cpf);
+    if (cliente) {
+        console.log(`Cliente encontrado: ${cliente.toString()}`);
+        const confirmacao = await promptSelect({
+            message: 'Deseja realmente excluir este cliente?',
+            choices: [
+                'Sim', 'Não'
+            ],
+        });
+        switch (confirmacao) {
+            case 0:
+                petShop.removerCliente(cpf);
+                console.log(chalk.green('>> Cliente excluído com sucesso. <<'));
+                break;
+            case 1:
+                console.log('Exclusão cancelada.');
+                break;
+        }
+    }
+    else {
+        console.error(`Cliente com CPF ${cpf} não encontrado.`);
+    }
+    await aguardaUsuario();
+}

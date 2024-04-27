@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { promptSelect } from './lib/prompts.js';
-import { menuCadastrarCliente, menuListarClientes, menuGravarDados, menuCadastrarPet, } from './menu.js';
+import { menuCadastrarCliente, menuListarClientes, menuExcluirCliente, menuGravarDados, menuCadastrarPet, } from './menu.js';
 import { PetShopStore } from './classes/PetShopStore.js';
 const petShop = new PetShopStore();
 let opcao = 0;
@@ -27,9 +27,9 @@ while (opcao !== 7) {
         case 1: // listar clientes
             await menuListarClientes(petShop);
             break;
-        // case 2: //excluir cliente
-        //   await menuExcluirCliente(petShop);
-        //   break; 
+        case 2: //excluir cliente
+            await menuExcluirCliente(petShop);
+            break;
         case 3: // cadastrar pets
             await menuCadastrarPet(petShop);
             break;
